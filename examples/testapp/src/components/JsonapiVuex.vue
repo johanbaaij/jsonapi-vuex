@@ -71,6 +71,16 @@
         </button>
       </div>
     </div>
+    <div id="Search">
+      <h2>Search widgets</h2>
+      <label for="search_value">Search value</label>
+      <input id="search_value" v-model="searchWidgetsValue" />
+      <div>
+        <button name="search_button" @click="searchRecords(searchWidgetsValue)">
+          Search
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,6 +95,7 @@ export default {
           type: 'widget',
         },
       },
+      searchWidgetsValue: undefined,
     }
   },
   computed: {
@@ -110,6 +121,10 @@ export default {
     },
     deleteRecord(id) {
       this.$store.dispatch('jv/delete', 'widget' + '/' + id)
+    },
+    searchRecords(value) {
+      const params = { 'filter[text_contains]': value }
+      this.$store.dispatch('jv/search', 'widget', { params: params })
     },
   },
 }
